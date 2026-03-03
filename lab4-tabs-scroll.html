@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Lab 4: Tabbed Content with smooth scroll and animated jQuery fadeIn transitions." />
+    <title>Lab 4 · Tabs + Smooth Scroll | jQuery Labs</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+        /* ── Tab navigation ── */
+        .tab-nav {
+            display: flex;
+            gap: 0.4rem;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+            scrollbar-width: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            padding: 0.6rem 1.2rem;
+            background: none;
+            border: none;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            color: var(--text-muted);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: color var(--transition);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform var(--transition);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        /* ── Tab content panels ── */
+        .tab-panel {
+            display: none;
+        }
+
+        /* hidden by default */
+        /* .tab-panel.active is shown via jQuery fadeIn */
+
+        .panel-inner {
+            padding: 1.5rem;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .panel-inner h3 {
+            margin-bottom: 0.65rem;
+        }
+
+        .panel-inner p {
+            margin-bottom: 0.75rem;
+        }
+
+        .panel-inner ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .panel-inner ul li {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .panel-inner ul li::before {
+            content: '▸';
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        /* ── Scroll-to section markers ── */
+        .scroll-target {
+            scroll-margin-top: 100px;
+        }
+
+        /* ── Info grid ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .info-card .ic-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .info-card .ic-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="navbar-brand"><span>$</span>jQuery Labs</a>
+            <a href="../index.html" class="back-btn">← Back to Labs</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <div class="badge">Lab 04</div>
+            <h1>📑 Tabbed Content + Smooth Scroll</h1>
+            <p>Switch tabs to reveal content with animated fadeIn and smooth-scroll navigation.</p>
+        </div>
+    </header>
+
+    <main class="lab-workspace">
+        <div class="container">
+            <div class="lab-panel">
+                <div class="lab-panel-header">
+                    <div class="lab-icon">📑</div>
+                    <div>
+                        <h3>Course Information Tabs</h3>
+                        <p style="font-size:0.82rem;margin:0;">5 tabs · fadeIn animation · smooth scroll</p>
+                    </div>
+                </div>
+
+                <div class="lab-panel-body">
+
+                    <!-- Tab Navigation -->
+                    <div class="tab-nav" role="tablist">
+                        <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true">📖
+                            Overview</button>
+                        <button class="tab-btn" data-tab="curriculum" role="tab">📚 Curriculum</button>
+                        <button class="tab-btn" data-tab="tools" role="tab">🛠 Tools</button>
+                        <button class="tab-btn" data-tab="labs" role="tab">🔬 Labs</button>
+                        <button class="tab-btn" data-tab="resources" role="tab">🔗 Resources</button>
+                    </div>
+
+                    <!-- Tab Panels -->
+
+                    <!-- Overview -->
+                    <div class="tab-panel scroll-target" id="tab-overview">
+                        <div class="panel-inner">
+                            <h3>📖 Course Overview</h3>
+                            <p>This course introduces web interactivity using jQuery — the world's most popular
+                                JavaScript library,
+                                powering millions of websites across the globe.</p>
+                            <div class="info-grid">
+                                <div class="info-card">
+                                    <div class="ic-value">8</div>
+                                    <div class="ic-label">Lab Exercises</div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="ic-value">jQuery</div>
+                                    <div class="ic-label">Framework</div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="ic-value">3.7</div>
+                                    <div class="ic-label">Latest Version</div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="ic-value">232001</div>
+                                    <div class="ic-label">Student ID</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curriculum -->
+                    <div class="tab-panel scroll-target" id="tab-curriculum">
+                        <div class="panel-inner">
+                            <h3>📚 Curriculum Topics</h3>
+                            <p>Topics covered across all 8 labs:</p>
+                            <ul>
+                                <li>DOM Selection and Traversal</li>
+                                <li>Event Handling and Delegation</li>
+                                <li>Effects, Animations, and Chaining</li>
+                                <li>AJAX and Fetch with JSON APIs</li>
+                                <li>Form Validation Techniques</li>
+                                <li>CSS Class Manipulation</li>
+                                <li>Drag-and-Drop with jQuery UI</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="tab-panel scroll-target" id="tab-tools">
+                        <div class="panel-inner">
+                            <h3>🛠 Tools &amp; Technologies</h3>
+                            <p>Everything you need to complete the labs:</p>
+                            <ul>
+                                <li>HTML5 — semantic page structure</li>
+                                <li>CSS3 — modern styling and layout</li>
+                                <li>jQuery 3.7 (CDN) — core framework</li>
+                                <li>jQuery UI (CDN) — drag-and-drop sortable</li>
+                                <li>JSONPlaceholder — free REST API for testing</li>
+                                <li>Any modern browser (Chrome, Firefox, Edge)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Labs -->
+                    <div class="tab-panel scroll-target" id="tab-labs">
+                        <div class="panel-inner">
+                            <h3>🔬 Lab List</h3>
+                            <p>All 8 lab exercises in this project:</p>
+                            <ul>
+                                <li>Lab 1 – Dynamic List Manager</li>
+                                <li>Lab 2 – Animated Image Gallery</li>
+                                <li>Lab 3 – Interactive Form Validation</li>
+                                <li>Lab 4 – Tabbed Content with Smooth Scroll</li>
+                                <li>Lab 5 – Chained Style Editor</li>
+                                <li>Lab 6 – API Data Fetcher</li>
+                                <li>Lab 7 – Drag-and-Drop Sortable List</li>
+                                <li>Lab 8 – Quiz Game</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Resources -->
+                    <div class="tab-panel scroll-target" id="tab-resources">
+                        <div class="panel-inner">
+                            <h3>🔗 Key Resources</h3>
+                            <p>Helpful links for further learning:</p>
+                            <ul>
+                                <li>jQuery Official Docs — jquery.com</li>
+                                <li>jQuery UI — jqueryui.com</li>
+                                <li>JSONPlaceholder — jsonplaceholder.typicode.com</li>
+                                <li>MDN Web Docs — developer.mozilla.org</li>
+                                <li>CSS Tricks — css-tricks.com</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div><!-- /body -->
+            </div><!-- /panel -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Lab 04 · Tabbed Content · Abdul Basit (232001)</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        /*
+         * Lab 4 — Tabbed Content with Smooth Scroll
+         * ──────────────────────────────────────────
+         * Demonstrates:
+         *   • DOM Manipulation  (show, hide, addClass, removeClass)
+         *   • Effects           (fadeIn with duration control)
+         *   • Event Handling    (click on tab buttons)
+         *   • Smooth Scroll     (jQuery animate on scrollTop)
+         */
+        $(function () {
+            'use strict';
+
+            const FADE_SPEED = 350;   // ms for fadeIn of new tab content
+
+            /**
+             * Activate a tab by its key string.
+             * Hides all other panels, shows the target with fadeIn,
+             * and smoothly scrolls the page to the panel.
+             * @param {string} tabKey - e.g. 'overview', 'curriculum'
+             */
+            function activateTab(tabKey) {
+                /* Update button states */
+                $('.tab-btn').removeClass('active').attr('aria-selected', 'false');
+                $('[data-tab="' + tabKey + '"]').addClass('active').attr('aria-selected', 'true');
+
+                /* Hide all panels, then reveal target */
+                $('.tab-panel').hide();
+                const $target = $('#tab-' + tabKey);
+                $target.fadeIn(FADE_SPEED);
+
+                /* Smooth scroll to the newly shown panel (accounting for sticky navbar) */
+                const scrollTo = $target.offset().top - 90;
+                $('html, body').animate({ scrollTop: scrollTo }, 500, 'swing');
+            }
+
+            /* ── Click handler on tab buttons ── */
+            $('.tab-nav').on('click', '.tab-btn', function () {
+                const key = $(this).data('tab');
+                activateTab(key);
+            });
+
+            /* ── Keyboard navigation: arrow keys ── */
+            $('.tab-nav').on('keydown', '.tab-btn', function (e) {
+                const $tabs = $('.tab-btn');
+                const idx = $tabs.index(this);
+                if (e.key === 'ArrowRight') {
+                    $tabs.eq((idx + 1) % $tabs.length).trigger('click').focus();
+                } else if (e.key === 'ArrowLeft') {
+                    $tabs.eq((idx - 1 + $tabs.length) % $tabs.length).trigger('click').focus();
+                }
+            });
+
+            /* ── Initialise first tab ── */
+            activateTab('overview');
+        });
+    </script>
+</body>
+
+</html>
