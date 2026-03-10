@@ -1,0 +1,138 @@
+/* =========================================
+   App.css – Student Card App
+   Clean modern styling for student cards
+   ========================================= */
+
+/* Import Google Font for a modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* ---- App Container ---- */
+.app {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---- Page Header ---- */
+.app-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.app-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  margin-bottom: 8px;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.5px;
+}
+
+/* ---- Cards Container ---- */
+/* Uses flexbox to lay cards side by side, wrapping on smaller screens */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* ---- Student Card ---- */
+.student-card {
+  width: 300px;
+  border-radius: 20px;
+  padding: 30px 25px;
+  color: #fff;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  /* Smooth entrance animation */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+/* Lift card on hover */
+.student-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Avatar Circle ---- */
+.card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+/* First letter of student name as avatar */
+.avatar-initials {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ---- Card Name ---- */
+.card-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* ---- Divider ---- */
+.card-divider {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* ---- Detail Rows ---- */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.card-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+}

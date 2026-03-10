@@ -1,0 +1,129 @@
+/* =========================================
+   App.css – Course List App
+   Clean modern styling for the course grid
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* ---- App Container ---- */
+.app {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ---- Page Header ---- */
+.app-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.app-header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 8px;
+}
+
+.app-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* ---- Courses Container (CSS Grid) ---- */
+/* Shows 2 cards per row on larger screens */
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* ---- Course Card ---- */
+.course-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Course Header (Name + Badge side by side) ---- */
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    gap: 10px;
+}
+
+.course-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    flex: 1;
+}
+
+/* ---- Online / Offline Badge (Bonus) ---- */
+.badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Green badge for Online courses */
+.badge-online {
+    background: #2ecc71;
+    color: #fff;
+}
+
+/* Orange badge for Offline courses */
+.badge-offline {
+    background: #e67e22;
+    color: #fff;
+}
+
+/* ---- Course Details ---- */
+.course-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.course-detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.07);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.course-icon {
+    font-size: 1.1rem;
+}
