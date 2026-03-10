@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="jQuery Labs — 8 interactive lab exercises by Abdul Basit (232001)" />
+  <title>jQuery Labs | 232001 – Abdul Basit</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── Index-page specific styles ── */
+    .hero {
+      padding: 6rem 0 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(108,99,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,101,132,0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.3);
+      color: #a29bfe;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 99px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 { margin-bottom: 1rem; }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .hero-meta-item .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .hero-meta-item .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    /* ── Labs Grid ── */
+    .labs-section { padding: 2rem 0 5rem; }
+    .section-title {
+      font-size: 1rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .labs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.25rem;
+    }
+    .lab-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .lab-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity var(--transition);
+      border-radius: var(--radius);
+    }
+    .lab-card:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+    .lab-card:hover::before { opacity: 1; }
+    .lab-card:hover .lab-number { transform: scale(1.08); }
+    .lab-card:hover .arrow { opacity: 1; transform: translateX(0); }
+
+    /* Gradient accents per lab */
+    .lab-card:nth-child(1)::before { background: linear-gradient(135deg, rgba(108,99,255,0.06), transparent); border-color: rgba(108,99,255,0.5); }
+    .lab-card:nth-child(2)::before { background: linear-gradient(135deg, rgba(255,101,132,0.06), transparent); }
+    .lab-card:nth-child(3)::before { background: linear-gradient(135deg, rgba(67,233,123,0.06), transparent); }
+    .lab-card:nth-child(4)::before { background: linear-gradient(135deg, rgba(253,211,77,0.06), transparent); }
+    .lab-card:nth-child(5)::before { background: linear-gradient(135deg, rgba(56,249,215,0.06), transparent); }
+    .lab-card:nth-child(6)::before { background: linear-gradient(135deg, rgba(240,147,251,0.06), transparent); }
+    .lab-card:nth-child(7)::before { background: linear-gradient(135deg, rgba(246,211,101,0.06), transparent); }
+    .lab-card:nth-child(8)::before { background: linear-gradient(135deg, rgba(108,99,255,0.08), transparent); }
+
+    .lab-card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .lab-number {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    /* Icon bg colours */
+    .lab-card:nth-child(1) .lab-number { background: rgba(108,99,255,0.15); }
+    .lab-card:nth-child(2) .lab-number { background: rgba(255,101,132,0.15); }
+    .lab-card:nth-child(3) .lab-number { background: rgba(67,233,123,0.15); }
+    .lab-card:nth-child(4) .lab-number { background: rgba(253,211,77,0.15); }
+    .lab-card:nth-child(5) .lab-number { background: rgba(56,249,215,0.15); }
+    .lab-card:nth-child(6) .lab-number { background: rgba(240,147,251,0.15); }
+    .lab-card:nth-child(7) .lab-number { background: rgba(246,211,101,0.15); }
+    .lab-card:nth-child(8) .lab-number { background: rgba(108,99,255,0.2); }
+
+    .arrow {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all var(--transition);
+    }
+    .lab-card-num-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .lab-card h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+    .lab-card p { font-size: 0.85rem; line-height: 1.6; }
+    .lab-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    /* ── Stack Section ── */
+    .stack-pills {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .stack-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 0.45rem 1rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .stack-pill span { font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+
+<!-- ───── Navbar ───── -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="navbar-brand">
+      <span>$</span>jQuery Labs
+    </a>
+    <div style="color: var(--text-muted); font-size: 0.85rem;">
+      232001 · Abdul Basit · Lab 04
+    </div>
+  </div>
+</nav>
+
+<!-- ───── Hero ───── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">⚡ Web Technologies Lab</div>
+    <h1>jQuery <span>Interactive</span> Labs</h1>
+    <p>
+      8 hands-on jQuery exercises covering DOM manipulation,
+      event handling, AJAX, animations, and more.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="value">8</span>
+        <span class="label">Lab Tasks</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="value">232001</span>
+        <span class="label">Student ID</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="value">jQuery</span>
+        <span class="label">Framework</span>
+      </div>
+    </div>
+
+    <div class="stack-pills">
+      <div class="stack-pill"><span>📄</span> HTML5</div>
+      <div class="stack-pill"><span>🎨</span> CSS3</div>
+      <div class="stack-pill"><span>⚡</span> jQuery 3.7</div>
+      <div class="stack-pill"><span>🖱️</span> jQuery UI</div>
+      <div class="stack-pill"><span>🌐</span> AJAX</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── Labs Grid ───── -->
+<section class="labs-section">
+  <div class="container">
+    <div class="section-title">Lab Exercises</div>
+
+    <div class="labs-grid" id="labs-grid">
+
+      <a href="labs/lab1-dynamic-list.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">📝</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 01</div>
+        <h3>Dynamic List Manager</h3>
+        <p>Add and delete list items with animated removal, hover effects, and empty-input prevention.</p>
+        <div class="lab-card-tags">
+          <span class="tag">DOM Manipulation</span>
+          <span class="tag">Events</span>
+          <span class="tag">Animation</span>
+        </div>
+      </a>
+
+      <a href="labs/lab2-image-gallery.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">🖼️</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 02</div>
+        <h3>Animated Image Gallery</h3>
+        <p>Navigate through image slides with smooth fadeIn/fadeOut transitions and dynamic captions.</p>
+        <div class="lab-card-tags">
+          <span class="tag">Effects</span>
+          <span class="tag">Chaining</span>
+          <span class="tag">DOM</span>
+        </div>
+      </a>
+
+      <a href="labs/lab3-form-validation.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">✅</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 03</div>
+        <h3>Interactive Form Validation</h3>
+        <p>Real-time field validation with error highlighting, blur events, and a success message on submit.</p>
+        <div class="lab-card-tags">
+          <span class="tag">Events</span>
+          <span class="tag">CSS Classes</span>
+          <span class="tag">Validation</span>
+        </div>
+      </a>
+
+      <a href="labs/lab4-tabs-scroll.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">📑</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 04</div>
+        <h3>Tabbed Content + Smooth Scroll</h3>
+        <p>Multi-tab content panels with animated fadeIn reveals and smooth-scroll navigation.</p>
+        <div class="lab-card-tags">
+          <span class="tag">Tabs</span>
+          <span class="tag">Animation</span>
+          <span class="tag">Scroll</span>
+        </div>
+      </a>
+
+      <a href="labs/lab5-style-editor.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">🎨</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 05 · Home</div>
+        <h3>Chained Style Editor</h3>
+        <p>Live text styling with jQuery chaining — change size, color, background, bold and italic toggling.</p>
+        <div class="lab-card-tags">
+          <span class="tag">Chaining</span>
+          <span class="tag">CSS Manip.</span>
+          <span class="tag">Toggle</span>
+        </div>
+      </a>
+
+      <a href="labs/lab6-api-fetcher.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">🌐</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 06 · Home</div>
+        <h3>API Data Fetcher</h3>
+        <p>Fetch paginated posts from JSONPlaceholder with a loading indicator and load-more functionality.</p>
+        <div class="lab-card-tags">
+          <span class="tag">AJAX</span>
+          <span class="tag">Pagination</span>
+          <span class="tag">Error Handling</span>
+        </div>
+      </a>
+
+      <a href="labs/lab7-drag-drop.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">🖱️</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 07 · Home</div>
+        <h3>Drag-and-Drop Sortable List</h3>
+        <p>Reorder list items with jQuery UI drag-and-drop, visual highlighting, and live order display.</p>
+        <div class="lab-card-tags">
+          <span class="tag">jQuery UI</span>
+          <span class="tag">Sortable</span>
+          <span class="tag">Events</span>
+        </div>
+      </a>
+
+      <a href="labs/lab8-quiz-game.html" class="lab-card">
+        <div class="lab-card-top">
+          <div class="lab-number">🧠</div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="lab-card-num-tag">Lab 08 · Home</div>
+        <h3>Quiz Game</h3>
+        <p>Multiple-choice quiz with score tracking, per-question option highlighting, and animated result reveal.</p>
+        <div class="lab-card-tags">
+          <span class="tag">Events</span>
+          <span class="tag">Animation</span>
+          <span class="tag">State</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───── Footer ───── -->
+<footer class="footer">
+  <div class="container">
+    <p>jQuery Labs &nbsp;·&nbsp; Abdul Basit &nbsp;·&nbsp; Student ID: 232001 &nbsp;·&nbsp; Lab 04</p>
+  </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+  /* Staggered card entrance */
+  $(function () {
+    $('.lab-card').each(function (i) {
+      const $card = $(this);
+      $card.css({ opacity: 0, transform: 'translateY(24px)' });
+      setTimeout(function () {
+        $card.animate({ opacity: 1 }, { duration: 420, step: function (now) {
+          $(this).css('transform', 'translateY(' + (24 - 24 * now) + 'px)');
+        }});
+      }, i * 70);
+    });
+  });
+</script>
+</body>
+</html>
