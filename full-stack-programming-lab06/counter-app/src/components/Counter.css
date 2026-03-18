@@ -1,0 +1,116 @@
+/* Counter.css - Styles for the Counter component */
+
+/* Main container */
+.counter-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Large count display */
+.count-display {
+    margin-bottom: 30px;
+}
+
+.count-value {
+    font-size: 5rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+/* Green when positive, gray when zero */
+.count-value.positive {
+    color: #5a3e8e;
+}
+
+.count-value.zero {
+    color: #aaa;
+}
+
+.count-label {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Button group layout */
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Base button styles */
+.btn {
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Increment button */
+.btn-increment {
+    background-color: #6c63ff;
+    color: white;
+}
+
+.btn-increment:hover:not(:disabled) {
+    background-color: #5a52d5;
+}
+
+/* Decrement button */
+.btn-decrement {
+    background-color: #ff6584;
+    color: white;
+}
+
+.btn-decrement:hover:not(:disabled) {
+    background-color: #e0546e;
+}
+
+/* Disabled state for decrement at 0 */
+.btn-decrement:disabled {
+    background-color: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Reset button */
+.btn-reset {
+    background-color: #43b89c;
+    color: white;
+}
+
+.btn-reset:hover:not(:disabled) {
+    background-color: #38a087;
+}
+
+/* Minimum note */
+.min-note {
+    margin-top: 20px;
+    color: #ff6584;
+    font-size: 0.85rem;
+    font-style: italic;
+}

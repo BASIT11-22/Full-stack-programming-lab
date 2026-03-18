@@ -1,0 +1,17 @@
+/* App.css - User Form App layout styling */
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.app-title {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+}

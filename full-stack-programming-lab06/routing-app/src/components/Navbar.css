@@ -1,0 +1,67 @@
+/* Navbar.css - Styles for the navigation bar in routing-app */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Brand / logo link */
+.navbar-brand a {
+    text-decoration: none;
+    color: #e0e0ff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+}
+
+.navbar-brand a:hover {
+    color: #a78bfa;
+}
+
+/* Navigation links list */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #c4c4dc;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links li a:hover {
+    color: #a78bfa;
+    border-bottom-color: #a78bfa;
+}
+
+/* Responsive: stack links on smaller screens */
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0 16px;
+        flex-wrap: wrap;
+        height: auto;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        gap: 10px;
+    }
+
+    .nav-links {
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+}
