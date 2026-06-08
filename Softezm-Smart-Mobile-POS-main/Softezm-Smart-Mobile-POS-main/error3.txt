@@ -1,0 +1,16 @@
+PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at validateDependentOptions (C:\Users\ASUS\OneDrive\Desktop\Projects\Softezm-Smart-Mobile-POS\node_modules\@prisma\client\src\runtime\utils\validatePrismaClientOptions.ts:250:11)
+    at validatePrismaClientOptions (C:\Users\ASUS\OneDrive\Desktop\Projects\Softezm-Smart-Mobile-POS\node_modules\@prisma\client\src\runtime\utils\validatePrismaClientOptions.ts:267:3)
+    at new t (C:\Users\ASUS\OneDrive\Desktop\Projects\Softezm-Smart-Mobile-POS\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:358:7)
+    at <anonymous> (C:\Users\ASUS\OneDrive\Desktop\Projects\Softezm-Smart-Mobile-POS\test-prisma2.ts:4:18)
+    at Object.<anonymous> (C:\Users\ASUS\OneDrive\Desktop\Projects\Softezm-Smart-Mobile-POS\test-prisma2.ts:8:1)
+    at Module._compile (node:internal/modules/cjs/loader:1554:14)
+    at Object.transformer (C:\Users\ASUS\AppData\Local\npm-cache\_npx\fd45a72a545557e9\node_modules\tsx\dist\register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)

@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  brand     String
+  model     String
+  sku       String?
+  price     Float
+  quantity  Int
+  storage   String?
+  color     String?
+  category  String   // 'phone' | 'accessory'
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Sale {
+  id            String     @id @default(cuid())
+  total         Float
+  subtotal      Float
+  tax           Float
+  discount      Float
+  paymentMethod String     // 'cash' | 'card' | 'pending'
+  timestamp     DateTime   @default(now())
+  customerName  String?
+  pendingAmount Float?     @default(0)
+  dueDate       String?
+  items         SaleItem[]
+}
+
+model SaleItem {
+  id       String @id @default(cuid())
+  name     String
+  price    Float
+  quantity Int
+  saleId   String
+  sale     Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade)
+}
+
+model Owner {
+  id                 String   @id @default(cuid())
+  name               String
+  storeName          String?
+  email              String   @unique
+  password           String
+  phone              String
+  subscriptionStatus String   // 'active' | 'expired' | 'pending'
+  joinDate           DateTime @default(now())
+  lastPaymentDate    DateTime @default(now())
+  lastPaymentAmount  Float
+  nextPaymentDate    DateTime
+  nextPaymentAmount  Float
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model CredentialRequest {
+  id          String   @id @default(cuid())
+  ownerId     String
+  ownerName   String
+  newEmail    String?
+  newPassword String?
+  reason      String
+  status      String   // 'pending' | 'approved' | 'rejected'
+  timestamp   DateTime @default(now())
+}
+
+model AdminSettings {
+  id       String @id @default("global-settings")
+  email    String @default("info@softezm.com")
+  password String @default("Yaddda123!")
+  theme    String @default("dark")
+  currency String @default("Rs.")
+}
